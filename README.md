@@ -163,4 +163,4 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
 
 ## Desenhos de arquitetura
 
-![Alt text](image.png)
+![Alt text](images/image.png)
