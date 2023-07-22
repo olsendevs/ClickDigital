@@ -1,6 +1,7 @@
 # ClickDigital
 plataforma para gestão de clientes + bot whatsapp
 
+# Arquitetura
 ## Definições (Técnologias)
 
 Backend: NodeJs + NestJS 
@@ -13,9 +14,9 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
 
 ## Etapas do projeto
 
-1 - Coletar todas as informações sobre funcionalidades e fluxos do sistema
+``OK`` 1 - Coletar todas as informações sobre funcionalidades e fluxos do sistema
 
-2 - Desenhar a arquitetura dos 
+2 - Desenhar a arquitetura do sistema
 
 3 - Desenvolver a API (backend) + integração com banco de dados
 
@@ -64,11 +65,26 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
     invoice: string
     validateDate: Date
     pushNotification: {
-        5DaysBefore: boolean
-        3DaysBefore: boolean
-        1DayBefore: boolean
-        EndDay: boolean
-        1DayAfter: boolean
+        5DaysBefore: {
+            active: boolean
+            sended: boolean
+        }
+        3DaysBefore: {
+            active: boolean
+            sended: boolean
+        }
+        1DayBefore: {
+            active: boolean
+            sended: boolean
+        }
+        EndDay: {
+            active: boolean
+            sended: boolean
+        }
+        1DayAfter: {
+            active: boolean
+            sended: boolean
+        }   
     } 
     comments: string
 }
@@ -144,3 +160,7 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
     whatsappId: string
 }
 ```
+
+## Desenhos de arquitetura
+
+![Alt text](image.png)
