@@ -43,15 +43,24 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
 
 ## Entidades
 
+- Global params:
+```
+{
+    createAt: Date
+    updateAt: Date
+    deleted: boolean 
+}
+```
+
 - Customer: 
 ```
 {
     name: string
     whatsapp: string
     login: string
-    senha: string
-    service: Service
-    plan: Plan
+    password: string
+    serviceId: Service
+    planId: Plan
     invoice: string
     validateDate: Date
     pushNotification: {
@@ -65,9 +74,73 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
 }
 ```
     
-- Produto
-- Plano
-- Usuario
-- Mensagem
-- Configurações-Mensagens 
-- Sessão-WhatsApp
+- Service:
+```
+{
+    name: string
+    cost: Decimal128
+}
+```
+
+- Plan:
+```
+{
+    name: string
+    value: Decimal128
+}
+```
+
+- User:
+```
+{
+    name: string
+    password: string
+    whatsapp: string
+    email: string
+    company: string
+}
+```
+
+- Message:
+```
+{
+    content: string
+    seasonId: Season
+    customerId: Customer
+}
+```
+
+- MessageConfigs: 
+```
+{
+    5DaysBefore: {
+        active: boolean
+        message: string
+    }
+    3DaysBefore: {
+        active: boolean
+        message: string
+    }
+    1DayBefore: {
+        active: boolean
+        message: string
+    }
+    EndDay: {
+        active: boolean
+        message: string
+    }
+    1DayAfter: {
+        active: boolean
+        message: string
+    }
+}
+```
+
+- Season: 
+```
+{
+    picture: string
+    name: string
+    whatsappId: string
+}
+```
