@@ -1,10 +1,76 @@
 # ClickDigital
+
 plataforma para gestão de clientes + bot whatsapp
 
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+</p>
+
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
+
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+
+## Description
+
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+
+## Installation
+
+```bash
+$ yarn install
+```
+
+## Running the app
+
+```bash
+# development
+$ yarn run start
+
+# watch mode
+$ yarn run start:dev
+
+# production mode
+$ yarn run start:prod
+```
+
+## Test
+
+```bash
+# unit tests
+$ yarn run test
+
+# e2e tests
+$ yarn run test:e2e
+
+# test coverage
+$ yarn run test:cov
+```
+
+## License
+
+Nest is [MIT licensed](LICENSE).
+
 # Arquitetura
+
 ## Definições (Técnologias)
 
-Backend: NodeJs + NestJS 
+Backend: NodeJs + NestJS
 Banco de dados: MongoDB
 Frontend: React + HorizonUI
 Arquiterura: Monolito
@@ -14,9 +80,9 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
 
 ## Etapas do projeto
 
-``OK`` 1 - Coletar todas as informações sobre funcionalidades e fluxos do sistema
+`OK` 1 - Coletar todas as informações sobre funcionalidades e fluxos do sistema
 
-2 - Desenhar a arquitetura do sistema
+`OK` 2 - Desenhar a arquitetura do sistema
 
 3 - Desenvolver a API (backend) + integração com banco de dados
 
@@ -32,9 +98,12 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
 
 ## Funcionalidades
 
-- Realizar login com usuário e senha
+OK - CRUD de usuário
 
-- CRUD de serviços
+OK - Autenticação JWT
+
+OK - CRUD de serviços
+
 - CRUD de planos
 - CRUD de clientes que receberão avisos de expiração do seu plano/produto
 
@@ -45,15 +114,17 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
 ## Entidades
 
 - Global params:
+
 ```
 {
-    createAt: Date
-    updateAt: Date
-    deleted: boolean 
+      createAt: Date
+      updateAt: Date
+      deleted: boolean
 }
 ```
 
-- Customer: 
+- Customer:
+
 ```
 {
     name: string
@@ -62,6 +133,7 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
     password: string
     serviceId: Service
     planId: Plan
+    userId: string
     invoice: string
     validateDate: Date
     pushNotification: {
@@ -84,29 +156,34 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
         1DayAfter: {
             active: boolean
             sended: boolean
-        }   
-    } 
+        }
+    }
     comments: string
 }
 ```
-    
+
 - Service:
+
 ```
 {
     name: string
     cost: Decimal128
+    userId: string
 }
 ```
 
 - Plan:
+
 ```
 {
     name: string
     value: Decimal128
+    userId: string
 }
 ```
 
 - User:
+
 ```
 {
     name: string
@@ -118,6 +195,7 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
 ```
 
 - Message:
+
 ```
 {
     content: string
@@ -126,7 +204,8 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
 }
 ```
 
-- MessageConfigs: 
+- MessageConfigs:
+
 ```
 {
     5DaysBefore: {
@@ -152,7 +231,8 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
 }
 ```
 
-- Season: 
+- Season:
+
 ```
 {
     picture: string
