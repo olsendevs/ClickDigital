@@ -16,10 +16,12 @@ export class OpenWAController {
     try {
       await res.setHeader('Content-Type', 'image/png');
       ev.on('qr.**', async (image) => {
-        const imageData = image.split(',')[1]; // Remove the data URI scheme (e.g., "data:image/png;base64,")
-        const imageBuffer = Buffer.from(imageData, 'base64');
+        try {
+          const imageData = image.split(',')[1]; // Remove the data URI scheme (e.g., "data:image/png;base64,")
+          const imageBuffer = Buffer.from(imageData, 'base64');
 
-        return await res.send(imageBuffer);
+          return await res.send(imageBuffer);
+        } catch (e) {}
       });
 
       ev.onAny(async (data, namespace) => {
