@@ -14,7 +14,7 @@ import { MessageModule } from './message/message.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(process.env.MONGO_URI),
+    MongooseModule.forRoot('mongodb://mongo:27017/'),
     ServiceModule,
     UserModule,
     AuthModule,
