@@ -19,9 +19,14 @@ export class CustomerRepository {
     return await this.CustomerModel.find({ deleted: false, userId });
   }
   async findActive() {
+    const endFilterDate = new Date();
+    const afterDayDate = new Date();
     return await this.CustomerModel.find({
       deleted: false,
-      validateDate: { $gte: new Date() },
+      validateDate: {
+        $gte: afterDayDate.setDate(afterDayDate.getDate() - 2),
+        $lt: endFilterDate.setDate(endFilterDate.getDate() + 6),
+      },
     });
   }
 
