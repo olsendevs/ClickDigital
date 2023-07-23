@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { PlanModule } from './plan/plan.module';
 import { CustomerModule } from './customer/customer.module';
+import { OpenWAModule } from './open-wa/open-wa.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CustomerModule } from './customer/customer.module';
     AuthModule,
     PlanModule,
     CustomerModule,
+    OpenWAModule,
   ],
   controllers: [],
   providers: [],

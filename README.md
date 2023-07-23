@@ -106,11 +106,13 @@ OK - CRUD de serviços
 
 OK - CRUD de planos
 
-- CRUD de clientes que receberão avisos de expiração do seu plano/produto
+OK - CRUD de clientes que receberão avisos de expiração do seu plano/produto
 
-- Realizar conexão com o whatsapp e salvar os cookies da conexão
+OK - Realizar conexão com o whatsapp e salvar os cookies da conexão
+
 - Enviar mensagens automaticas baseados nas configurações e salva-las no banco
-- Criar chaves de referencia para informações dos clientes
+
+OK - Criar chaves de referencia para informações dos clientes
 
 ## Entidades
 
@@ -132,8 +134,8 @@ OK - CRUD de planos
     whatsapp: string
     login: string
     password: string
-    serviceId: Service
-    planId: Plan
+    serviceId: string
+    planId: string
     userId: string
     invoice: string
     validateDate: Date
@@ -159,7 +161,7 @@ OK - CRUD de planos
             sended: boolean
         }
     }
-    comments: string
+    comments?: string
 }
 ```
 
@@ -200,7 +202,7 @@ OK - CRUD de planos
 ```
 {
     content: string
-    seasonId: Season
+    userId: string
     customerId: Customer
 }
 ```
