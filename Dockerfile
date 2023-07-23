@@ -8,6 +8,8 @@ COPY package*.json ./
 
 COPY .env ./
 
+RUN chown node:node /usr/src/app/
+
 RUN npm ci
 
 COPY . .
@@ -16,7 +18,6 @@ RUN npm run build
 
 FROM node:18.15.0
 
-ENV NODE_ENV production
 USER node
 
 # Create app directory
@@ -26,6 +27,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 COPY .env ./
+
+RUN chown node:node /usr/src/app/
 
 RUN npm ci --production
 
