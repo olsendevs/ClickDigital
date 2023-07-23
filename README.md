@@ -104,7 +104,8 @@ OK - Autenticação JWT
 
 OK - CRUD de serviços
 
-- CRUD de planos
+OK - CRUD de planos
+
 - CRUD de clientes que receberão avisos de expiração do seu plano/produto
 
 - Realizar conexão com o whatsapp e salvar os cookies da conexão
@@ -136,7 +137,7 @@ OK - CRUD de serviços
     userId: string
     invoice: string
     validateDate: Date
-    pushNotification: {
+    sendNotificationOn: {
         5DaysBefore: {
             active: boolean
             sended: boolean
