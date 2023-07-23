@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UpdateMessageConfigDto } from '../dto/update-message-config.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { MessageConfig } from '../entities/message-config.entity';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 
 @Injectable()
 export class MessageConfigsRepository {
@@ -19,10 +19,10 @@ export class MessageConfigsRepository {
   async findAll(userId: string) {
     return await this.MessageConfigsModel.find({ deleted: false, userId });
   }
-  async findActive() {
-    return await this.MessageConfigsModel.find({
+  async findByUserId(userId: string) {
+    return await this.MessageConfigsModel.findOne({
       deleted: false,
-      validateDate: { $gte: new Date() },
+      userId: userId,
     });
   }
 

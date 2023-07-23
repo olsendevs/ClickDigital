@@ -5,12 +5,14 @@ import { CreateUserDto } from 'src/user/dto/create-User.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { Payload } from 'src/types/payload.type';
 import { Roles, RolesGuard } from './jwt/role.guard';
+import { OpenWAService } from 'src/open-wa/open-wa.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private userService: UserService,
+    private openWaService: OpenWAService,
   ) {}
   @Post('register')
   @UseGuards(RolesGuard)
@@ -33,6 +35,7 @@ export class AuthController {
       role: 'default',
     };
     const token = await this.authService.signPayload(payload);
+    this.openWaService.startSession(user._id.toString());
     return { user, token };
   }
 }

@@ -9,6 +9,7 @@ import { CustomerModule } from './customer/customer.module';
 import { OpenWAModule } from './open-wa/open-wa.module';
 import { CronModule } from './cron/cron.module';
 import { MessageConfigsModule } from './message-configs/message-configs.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { MessageConfigsModule } from './message-configs/message-configs.module';
     OpenWAModule,
     CronModule,
     MessageConfigsModule,
+    MessageModule,
   ],
   controllers: [],
   providers: [],

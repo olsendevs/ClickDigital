@@ -1,17 +1,23 @@
 // openwa.session.ts
 
 import { Injectable } from '@nestjs/common';
-import { create, Client, ev, NotificationLanguage } from '@open-wa/wa-automate';
+import {
+  create,
+  Client,
+  ev,
+  NotificationLanguage,
+  ChatId,
+} from '@open-wa/wa-automate';
 
 @Injectable()
-export class OpenWASession {
+export class OpenWAService {
   private client: Client;
 
   async startSession(sessionId: string): Promise<void> {
     if (this.client != undefined) {
       const sessionAlreadyUp = this.client.getSessionId();
       if (sessionAlreadyUp) {
-        ev.emit(sessionId, 'SUCCESS');
+        ev.emit((await this.client.getHostNumber()).toString(), 'SUCCESS');
         return;
       }
     }
@@ -38,5 +44,9 @@ export class OpenWASession {
         await this.client.sendText(message.from, '👋 Hello!');
       }
     });
+  }
+
+  async sendMessage(sessionId: ChatId, message: string) {
+    await this.client.sendText(sessionId, message);
   }
 }

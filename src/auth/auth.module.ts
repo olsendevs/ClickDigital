@@ -8,6 +8,7 @@ import { UserService } from 'src/user/services/user.service';
 import { UserRepository } from 'src/user/repositories/User.repository';
 import { JwtStrategy } from './jwt/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
+import { OpenWAService } from 'src/open-wa/open-wa.service';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { JwtModule } from '@nestjs/jwt';
     UserService,
     UserRepository,
     JwtStrategy,
+    OpenWAService,
   ],
 })
 export class AuthModule {}

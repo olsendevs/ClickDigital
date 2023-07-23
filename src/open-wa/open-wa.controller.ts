@@ -1,14 +1,14 @@
 // qr-code.controller.ts
 
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
-import { OpenWASession } from './open-wa.service';
+import { OpenWAService } from './open-wa.service';
 import { Response } from 'express';
 import { ev } from '@open-wa/wa-automate';
 import { Roles, RolesGuard } from 'src/auth/jwt/role.guard';
 
 @Controller('qr-code')
 export class OpenWAController {
-  constructor(private readonly openWASession: OpenWASession) {}
+  constructor(private readonly openWASession: OpenWAService) {}
   @UseGuards(RolesGuard)
   @Roles('default')
   @Get()
