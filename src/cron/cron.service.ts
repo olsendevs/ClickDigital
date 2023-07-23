@@ -17,146 +17,147 @@ export class CronService implements OnModuleInit {
   ) {}
   onModuleInit() {
     cron.schedule('* * * * *', async () => {
-      const customers = await this.customerRepository.findActive();
-      customers.forEach(async (customer) => {
-        const messageConfigs = await this.messageConfigsRepository.findByUserId(
-          customer.userId,
-        );
-        const chatId = (customer.whatsapp + '@c.us') as ChatId;
+      try {
+        const customers = await this.customerRepository.findActive();
+        customers.forEach(async (customer) => {
+          const messageConfigs =
+            await this.messageConfigsRepository.findByUserId(customer.userId);
+          const chatId = (customer.whatsapp + '@c.us') as ChatId;
 
-        let validateDate = new Date(customer.validateDate);
-        let tomorow = new Date();
-        tomorow = new Date(tomorow.setDate(tomorow.getDate() + 1));
-        tomorow = new Date(tomorow.setHours(12));
-        tomorow = new Date(tomorow.setMinutes(0));
+          let validateDate = new Date(customer.validateDate);
+          let tomorow = new Date();
+          tomorow = new Date(tomorow.setDate(tomorow.getDate() + 1));
+          tomorow = new Date(tomorow.setHours(12));
+          tomorow = new Date(tomorow.setMinutes(0));
 
-        const fiveDaysBefore = new Date(
-          validateDate.setDate(validateDate.getDate() - 5),
-        );
-        if (fiveDaysBefore.getDay() == tomorow.getDay()) {
-          if (
-            messageConfigs.fiveDaysBefore != '' &&
-            customer.sendNotificationOn.fiveDaysBefore.sended == false
-          ) {
-            schedule.scheduleJob(tomorow, async () => {
-              await this.openWAService.startSession(customer.userId);
-              await this.openWAService.sendMessage(
-                chatId,
-                messageConfigs.fiveDaysBefore,
+          const fiveDaysBefore = new Date(
+            validateDate.setDate(validateDate.getDate() - 5),
+          );
+          if (fiveDaysBefore.getDay() == tomorow.getDay()) {
+            if (
+              messageConfigs.fiveDaysBefore != '' &&
+              customer.sendNotificationOn.fiveDaysBefore.sended == false
+            ) {
+              schedule.scheduleJob(tomorow, async () => {
+                await this.openWAService.startSession(customer.userId);
+                await this.openWAService.sendMessage(
+                  chatId,
+                  messageConfigs.fiveDaysBefore,
+                );
+              });
+              customer.sendNotificationOn.fiveDaysBefore.sended = true;
+              this.customerRepository.update(
+                customer._id.toString(),
+                customer,
+                customer.userId,
               );
-            });
-            customer.sendNotificationOn.fiveDaysBefore.sended = true;
-            this.customerRepository.update(
-              customer._id.toString(),
-              customer,
-              customer.userId,
-            );
+            }
+            return;
           }
-          return;
-        }
 
-        validateDate = new Date(customer.validateDate);
-        const threeDaysBefore = new Date(
-          validateDate.setDate(validateDate.getDate() - 3),
-        );
-        if (threeDaysBefore.getDay() == tomorow.getDay()) {
-          if (
-            messageConfigs.threeDaysBefore != '' &&
-            customer.sendNotificationOn.threeDaysBefore.sended == false
-          ) {
-            schedule.scheduleJob(tomorow, async () => {
-              await this.openWAService.startSession(customer.userId);
-              await this.openWAService.sendMessage(
-                chatId,
-                messageConfigs.threeDaysBefore,
+          validateDate = new Date(customer.validateDate);
+          const threeDaysBefore = new Date(
+            validateDate.setDate(validateDate.getDate() - 3),
+          );
+          if (threeDaysBefore.getDay() == tomorow.getDay()) {
+            if (
+              messageConfigs.threeDaysBefore != '' &&
+              customer.sendNotificationOn.threeDaysBefore.sended == false
+            ) {
+              schedule.scheduleJob(tomorow, async () => {
+                await this.openWAService.startSession(customer.userId);
+                await this.openWAService.sendMessage(
+                  chatId,
+                  messageConfigs.threeDaysBefore,
+                );
+              });
+              customer.sendNotificationOn.threeDaysBefore.sended = true;
+              this.customerRepository.update(
+                customer._id.toString(),
+                customer,
+                customer.userId,
               );
-            });
-            customer.sendNotificationOn.threeDaysBefore.sended = true;
-            this.customerRepository.update(
-              customer._id.toString(),
-              customer,
-              customer.userId,
-            );
+            }
+            return;
           }
-          return;
-        }
 
-        validateDate = new Date(customer.validateDate);
-        const oneDayBefore = new Date(
-          validateDate.setDate(validateDate.getDate() - 1),
-        );
-        if (oneDayBefore.getDay() == tomorow.getDay()) {
-          if (
-            messageConfigs.oneDayBefore != '' &&
-            customer.sendNotificationOn.oneDayBefore.sended == false
-          ) {
-            schedule.scheduleJob(tomorow, async () => {
-              await this.openWAService.startSession(customer.userId);
-              await this.openWAService.sendMessage(
-                chatId,
-                messageConfigs.oneDayBefore,
+          validateDate = new Date(customer.validateDate);
+          const oneDayBefore = new Date(
+            validateDate.setDate(validateDate.getDate() - 1),
+          );
+          if (oneDayBefore.getDay() == tomorow.getDay()) {
+            if (
+              messageConfigs.oneDayBefore != '' &&
+              customer.sendNotificationOn.oneDayBefore.sended == false
+            ) {
+              schedule.scheduleJob(tomorow, async () => {
+                await this.openWAService.startSession(customer.userId);
+                await this.openWAService.sendMessage(
+                  chatId,
+                  messageConfigs.oneDayBefore,
+                );
+              });
+              customer.sendNotificationOn.oneDayBefore.sended = true;
+              this.customerRepository.update(
+                customer._id.toString(),
+                customer,
+                customer.userId,
               );
-            });
-            customer.sendNotificationOn.oneDayBefore.sended = true;
-            this.customerRepository.update(
-              customer._id.toString(),
-              customer,
-              customer.userId,
-            );
+            }
+            return;
           }
-          return;
-        }
 
-        validateDate = new Date(customer.validateDate);
-        const EndDay = new Date(validateDate.setDate(validateDate.getDate()));
-        if (EndDay.getDay() == tomorow.getDay()) {
-          if (
-            messageConfigs.EndDay != '' &&
-            customer.sendNotificationOn.EndDay.sended == false
-          ) {
-            schedule.scheduleJob(tomorow, async () => {
-              await this.openWAService.startSession(customer.userId);
-              await this.openWAService.sendMessage(
-                chatId,
-                messageConfigs.EndDay,
+          validateDate = new Date(customer.validateDate);
+          const EndDay = new Date(validateDate.setDate(validateDate.getDate()));
+          if (EndDay.getDay() == tomorow.getDay()) {
+            if (
+              messageConfigs.EndDay != '' &&
+              customer.sendNotificationOn.EndDay.sended == false
+            ) {
+              schedule.scheduleJob(tomorow, async () => {
+                await this.openWAService.startSession(customer.userId);
+                await this.openWAService.sendMessage(
+                  chatId,
+                  messageConfigs.EndDay,
+                );
+              });
+              customer.sendNotificationOn.EndDay.sended = true;
+              this.customerRepository.update(
+                customer._id.toString(),
+                customer,
+                customer.userId,
               );
-            });
-            customer.sendNotificationOn.EndDay.sended = true;
-            this.customerRepository.update(
-              customer._id.toString(),
-              customer,
-              customer.userId,
-            );
+            }
+            return;
           }
-          return;
-        }
 
-        validateDate = new Date(customer.validateDate);
-        const oneDayAfter = new Date(
-          validateDate.setDate(validateDate.getDate() + 1),
-        );
-        if (oneDayAfter.getDay() == tomorow.getDay()) {
-          if (
-            messageConfigs.oneDayAfter != '' &&
-            customer.sendNotificationOn.oneDayAfter.sended == false
-          ) {
-            schedule.scheduleJob(tomorow, async () => {
-              await this.openWAService.startSession(customer.userId);
-              await this.openWAService.sendMessage(
-                chatId,
-                messageConfigs.oneDayAfter,
+          validateDate = new Date(customer.validateDate);
+          const oneDayAfter = new Date(
+            validateDate.setDate(validateDate.getDate() + 1),
+          );
+          if (oneDayAfter.getDay() == tomorow.getDay()) {
+            if (
+              messageConfigs.oneDayAfter != '' &&
+              customer.sendNotificationOn.oneDayAfter.sended == false
+            ) {
+              schedule.scheduleJob(tomorow, async () => {
+                await this.openWAService.startSession(customer.userId);
+                await this.openWAService.sendMessage(
+                  chatId,
+                  messageConfigs.oneDayAfter,
+                );
+              });
+              customer.sendNotificationOn.oneDayAfter.sended = true;
+              this.customerRepository.update(
+                customer._id.toString(),
+                customer,
+                customer.userId,
               );
-            });
-            customer.sendNotificationOn.oneDayAfter.sended = true;
-            this.customerRepository.update(
-              customer._id.toString(),
-              customer,
-              customer.userId,
-            );
+            }
+            return;
           }
-          return;
-        }
-      });
+        });
+      } catch (e) {}
     });
   }
 }
