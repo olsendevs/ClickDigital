@@ -3,8 +3,8 @@
 import { Module } from '@nestjs/common';
 import { CronService } from './cron.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CustomerRepository } from 'src/customer/repositories/Customer.repository';
-import { CustomerSchema } from 'src/customer/entities/Customer.entity';
+import { CustomerRepository } from 'src/customer/repositories/customer.repository';
+import { CustomerSchema } from 'src/customer/entities/customer.entity';
 import { MessageConfigsRepository } from 'src/message-configs/repositories/message-configs.repository';
 import { MessageConfigSchema } from 'src/message-configs/entities/message-config.entity';
 import { OpenWAService } from 'src/open-wa/open-wa.service';

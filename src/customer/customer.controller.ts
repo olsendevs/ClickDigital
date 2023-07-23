@@ -10,8 +10,8 @@ import {
   Req,
 } from '@nestjs/common';
 import { CustomerService } from './services/customer.service';
-import { CreateCustomerDto } from './dto/create-Customer.dto';
-import { UpdateCustomerDto } from './dto/update-Customer.dto';
+import { CreateCustomerDto } from './dto/create-customer.dto';
+import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { Roles, RolesGuard } from 'src/auth/jwt/role.guard';
 
 @Controller('Customer')

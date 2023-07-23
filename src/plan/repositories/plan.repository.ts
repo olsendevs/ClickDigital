@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePlanDto } from '../dto/create-Plan.dto';
-import { UpdatePlanDto } from '../dto/update-Plan.dto';
+import { UpdatePlanDto } from '../dto/update-plan.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Plan } from '../entities/Plan.entity';
+import { Plan } from '../entities/plan.entity';
 import { Model } from 'mongoose';
 
 @Injectable()

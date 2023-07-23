@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { PlanService } from './services/plan.service';
 import { PlanController } from './plan.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { PlanSchema } from './entities/Plan.entity';
-import { UserSchema } from 'src/user/entities/User.entity';
-import { PlanRepository } from './repositories/Plan.repository';
+import { PlanSchema } from './entities/plan.entity';
+import { UserSchema } from 'src/user/entities/user.entity';
+import { PlanRepository } from './repositories/plan.repository';
 import { AuthService } from 'src/auth/services/auth.service';
 import { AuthRepository } from 'src/auth/repositories/auth.repository';
 import { UserService } from 'src/user/services/user.service';
-import { UserRepository } from 'src/user/repositories/User.repository';
+import { UserRepository } from 'src/user/repositories/user.repository';
 
 @Module({
   imports: [

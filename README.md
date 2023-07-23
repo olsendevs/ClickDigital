@@ -84,7 +84,7 @@ WhatsApp: https://github.com/open-wa/wa-automate-nodejs
 
 `OK` 2 - Desenhar a arquitetura do sistema
 
-3 - Desenvolver a API (backend) + integração com banco de dados
+`OK` 3 - Desenvolver a API (backend) + integração com banco de dados
 
 4 - Realizar deploy da API em homologação
 
@@ -110,7 +110,7 @@ OK - CRUD de clientes que receberão avisos de expiração do seu plano/produto
 
 OK - Realizar conexão com o whatsapp e salvar os cookies da conexão
 
-- Enviar mensagens automaticas baseados nas configurações e salva-las no banco
+OK - Enviar mensagens automaticas baseados nas configurações e salva-las no banco
 
 OK - Criar chaves de referencia para informações dos clientes
 

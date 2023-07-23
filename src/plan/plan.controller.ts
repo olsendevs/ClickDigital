@@ -10,8 +10,8 @@ import {
   Req,
 } from '@nestjs/common';
 import { PlanService } from './services/plan.service';
-import { CreatePlanDto } from './dto/create-Plan.dto';
-import { UpdatePlanDto } from './dto/update-Plan.dto';
+import { CreatePlanDto } from './dto/create-plan.dto';
+import { UpdatePlanDto } from './dto/update-plan.dto';
 import { Roles, RolesGuard } from 'src/auth/jwt/role.guard';
 
 @Controller('Plan')

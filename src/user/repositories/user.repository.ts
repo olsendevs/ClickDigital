@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { UpdateUserDto } from '../dto/update-User.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from '../entities/User.entity';
+import { User } from '../entities/user.entity';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { LoginUserDto } from 'src/auth/dto/login-user.dto';

@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './services/auth.service';
 import { UserService } from 'src/user/services/user.service';
-import { CreateUserDto } from 'src/user/dto/create-User.dto';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { Payload } from 'src/types/payload.type';
 import { Roles, RolesGuard } from './jwt/role.guard';

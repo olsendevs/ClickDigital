@@ -4,7 +4,7 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ChatId } from '@open-wa/wa-automate';
 import * as cron from 'node-cron';
 import * as schedule from 'node-schedule';
-import { CustomerRepository } from 'src/customer/repositories/Customer.repository';
+import { CustomerRepository } from 'src/customer/repositories/customer.repository';
 import { MessageConfigsRepository } from 'src/message-configs/repositories/message-configs.repository';
 import { OpenWAService } from 'src/open-wa/open-wa.service';
 
