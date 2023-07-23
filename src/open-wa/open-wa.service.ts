@@ -8,6 +8,13 @@ export class OpenWASession {
   private client: Client;
 
   async startSession(sessionId: string): Promise<void> {
+    if (this.client != undefined) {
+      const sessionAlreadyUp = this.client.getSessionId();
+      if (sessionAlreadyUp) {
+        ev.emit(sessionId, 'SUCCESS');
+        return;
+      }
+    }
     this.client = await create({
       sessionId: sessionId,
       multiDevice: true,
@@ -27,6 +34,7 @@ export class OpenWASession {
   private setupMessageListener() {
     this.client.onMessage(async (message) => {
       if (message.body === 'Hi') {
+        console.log(message.from);
         await this.client.sendText(message.from, '👋 Hello!');
       }
     });

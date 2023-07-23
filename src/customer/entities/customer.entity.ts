@@ -15,7 +15,7 @@ export interface Customer {
       active: boolean;
       sended: boolean;
     };
-    treeDaysBefore: {
+    threeDaysBefore: {
       active: boolean;
       sended: boolean;
     };
@@ -54,7 +54,7 @@ export const CustomerSchema = new mongoose.Schema({
       active: { type: Boolean, required: true },
       sended: { type: Boolean, required: true },
     },
-    treeDaysBefore: {
+    threeDaysBefore: {
       active: { type: Boolean, required: true },
       sended: { type: Boolean, required: true },
     },

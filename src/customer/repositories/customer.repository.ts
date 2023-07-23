@@ -18,6 +18,12 @@ export class CustomerRepository {
   async findAll(userId: string) {
     return await this.CustomerModel.find({ deleted: false, userId });
   }
+  async findActive() {
+    return await this.CustomerModel.find({
+      deleted: false,
+      validateDate: { $gte: new Date() },
+    });
+  }
 
   async findOne(id: string, userId: string) {
     return await this.CustomerModel.findOne({

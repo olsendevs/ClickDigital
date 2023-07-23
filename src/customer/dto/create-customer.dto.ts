@@ -38,7 +38,7 @@ export class CreateCustomerDto {
       active: boolean;
       sended: boolean;
     };
-    treeDaysBefore: {
+    threeDaysBefore: {
       active: boolean;
       sended: boolean;
     };
