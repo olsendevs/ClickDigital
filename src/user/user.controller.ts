@@ -16,8 +16,6 @@ import { Roles, RolesGuard } from 'src/auth/jwt/role.guard';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  @UseGuards(RolesGuard)
-  @Roles('admin')
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
