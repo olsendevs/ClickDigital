@@ -35,7 +35,7 @@ export class AuthController {
       role: 'default',
     };
     const token = await this.authService.signPayload(payload);
-    this.openWaService.startSession(user._id.toString());
+    //this.openWaService.startSession(user._id.toString());
     return { user, token };
   }
 }

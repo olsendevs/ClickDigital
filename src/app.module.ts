@@ -10,12 +10,13 @@ import { OpenWAModule } from './open-wa/open-wa.module';
 import { CronModule } from './cron/cron.module';
 import { MessageConfigsModule } from './message-configs/message-configs.module';
 import { MessageModule } from './message/message.module';
+import { HealthCheckController } from './health-check/health-check.controller';
 import 'dotenv/config';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot('mongodb://mongo:27017'),
+    MongooseModule.forRoot('mongodb://0.0.0.0:27017/'),
     ServiceModule,
     UserModule,
     AuthModule,
@@ -26,7 +27,7 @@ import 'dotenv/config';
     MessageConfigsModule,
     MessageModule,
   ],
-  controllers: [],
+  controllers: [HealthCheckController],
   providers: [],
 })
 export class AppModule {}
