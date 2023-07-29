@@ -6,8 +6,8 @@ export interface Customer {
   whatsapp: string;
   login: string;
   password: string;
-  serviceId: string;
-  planId: string;
+  serviceId: mongoose.Types.ObjectId | string | any;
+  planId: mongoose.Types.ObjectId | string | any;
   invoice: string;
   validateDate: Date;
   sendNotificationOn: {
@@ -44,8 +44,12 @@ export const CustomerSchema = new mongoose.Schema({
   whatsapp: { type: String, required: true },
   login: { type: String, required: true },
   password: { type: String, required: true },
-  serviceId: { type: String, required: true },
-  planId: { type: String, required: true },
+  serviceId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Service',
+    required: true,
+  },
+  planId: { type: mongoose.Schema.Types.ObjectId, ref: 'Plan', required: true },
   invoice: { type: String, required: true },
   comment: { type: String, required: false },
   validateDate: { type: Date, required: true },

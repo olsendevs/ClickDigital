@@ -11,12 +11,15 @@ export class CustomerRepository {
   ) {}
 
   async create(doc: Customer) {
+    console.log(doc);
     const result = await new this.CustomerModel(doc).save();
     return result.id;
   }
 
   async findAll(userId: string) {
-    return await this.CustomerModel.find({ deleted: false, userId });
+    return await this.CustomerModel.find({ deleted: false, userId })
+      .populate('planId', 'name')
+      .populate('serviceId', 'name');
   }
   async findActive() {
     const endFilterDate = new Date();
