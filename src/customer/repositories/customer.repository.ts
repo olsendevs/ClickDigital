@@ -11,14 +11,13 @@ export class CustomerRepository {
   ) {}
 
   async create(doc: Customer) {
-    console.log(doc);
     const result = await new this.CustomerModel(doc).save();
     return result.id;
   }
 
   async findAll(userId: string) {
     return await this.CustomerModel.find({ deleted: false, userId })
-      .populate('planId', 'name')
+      .populate('planId', ['name', 'value'])
       .populate('serviceId', 'name');
   }
   async findActive() {
@@ -38,7 +37,9 @@ export class CustomerRepository {
       _id: id,
       deleted: false,
       userId,
-    });
+    })
+      .populate('planId', ['name', 'value'])
+      .populate('serviceId', 'name');
   }
 
   async update(

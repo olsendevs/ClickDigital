@@ -16,7 +16,7 @@ export class CronService implements OnModuleInit {
     private openWAService: OpenWAService,
   ) {}
   onModuleInit() {
-    cron.schedule('* * * * *', async () => {
+    cron.schedule('0 0 * * *', async () => {
       try {
         const customers = await this.customerRepository.findActive();
         customers.forEach(async (customer) => {
