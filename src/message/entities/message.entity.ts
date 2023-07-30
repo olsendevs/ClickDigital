@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 export interface Message {
   content: string;
-  customerId: string;
+  customerId: mongoose.Types.ObjectId | string | any;
   userId: string;
   createAt: Date;
   updateAt: Date;
@@ -11,7 +11,11 @@ export interface Message {
 
 export const MessageSchema = new mongoose.Schema({
   content: { type: String, required: false },
-  customerId: { type: String, required: false },
+  customerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Customer',
+    required: true,
+  },
   userId: { type: String, required: true },
   createAt: { type: Date, required: true },
   updateAt: { type: Date, required: true },

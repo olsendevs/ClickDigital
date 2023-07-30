@@ -13,12 +13,9 @@ export class MessageConfigsRepository {
 
   async create(doc: MessageConfig) {
     const result = await new this.MessageConfigsModel(doc).save();
-    return result.id;
+    return result;
   }
 
-  async findAll(userId: string) {
-    return await this.MessageConfigsModel.find({ deleted: false, userId });
-  }
   async findByUserId(userId: string) {
     return await this.MessageConfigsModel.findOne({
       deleted: false,
@@ -39,6 +36,7 @@ export class MessageConfigsRepository {
     updateMessageConfigsDto: UpdateMessageConfigDto,
     userId: string,
   ) {
+    console.log(id);
     await this.MessageConfigsModel.updateOne(
       { _id: id },
       {

@@ -24,8 +24,26 @@ export class MessageConfigsService {
     });
   }
 
-  async findAll(userId: string) {
-    return await this.repo.findAll(userId);
+  async findByUserId(userId: string) {
+    let messageConfig = await this.repo.findByUserId(userId);
+
+    if (messageConfig) {
+      return messageConfig;
+    }
+
+    messageConfig = await this.repo.create({
+      fiveDaysBefore: '',
+      threeDaysBefore: '',
+      oneDayBefore: '',
+      EndDay: '',
+      oneDayAfter: '',
+      createAt: new Date(),
+      updateAt: new Date(),
+      deleted: false,
+      userId,
+    });
+
+    return messageConfig;
   }
 
   async findOne(id: string, userId: string) {

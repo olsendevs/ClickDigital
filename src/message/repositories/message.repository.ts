@@ -16,7 +16,10 @@ export class MessageRepository {
   }
 
   async findAll(userId: string) {
-    return await this.MessageModel.find({ deleted: false, userId });
+    return await this.MessageModel.find({ deleted: false, userId }).populate(
+      'customerId',
+      'whatsapp',
+    );
   }
   async findActive() {
     return await this.MessageModel.find({

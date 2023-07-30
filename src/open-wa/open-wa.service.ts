@@ -14,27 +14,53 @@ export class OpenWAService {
   private client: Client;
 
   async startSession(sessionId: string): Promise<void> {
-    if (this.client != undefined) {
-      const sessionAlreadyUp = this.client.getSessionId();
-      if (sessionAlreadyUp) {
-        ev.emit((await this.client.getHostNumber()).toString(), 'SUCCESS');
-        return;
+    try {
+      if (this.client != undefined) {
+        const sessionAlreadyUp = this.client.getSessionId();
+        if (sessionAlreadyUp) {
+          ev.emit((await this.client.getHostNumber()).toString(), 'SUCCESS');
+          return;
+        }
       }
+      this.client = await create({
+        sessionId: sessionId,
+        multiDevice: true,
+        authTimeout: 60,
+        blockCrashLogs: true,
+        disableSpins: true,
+        headless: true,
+        hostNotificationLang: NotificationLanguage.PTBR,
+        logConsole: false,
+        popup: true,
+        qrTimeout: 0,
+      });
+      console.log('Sessão Open-WA iniciada!');
+    } catch (e) {}
+  }
+  async checkSession(): Promise<boolean> {
+    try {
+      if (this.client != undefined) {
+        const sessionAlreadyUp = this.client.getSessionId();
+        if (sessionAlreadyUp) {
+          return true;
+        }
+      }
+      return false;
+    } catch (e) {
+      console.log(e);
     }
-    this.client = await create({
-      sessionId: sessionId,
-      multiDevice: true,
-      authTimeout: 60,
-      blockCrashLogs: true,
-      disableSpins: true,
-      headless: true,
-      hostNotificationLang: NotificationLanguage.PTBR,
-      logConsole: false,
-      popup: true,
-      qrTimeout: 0,
-    });
-    console.log('Sessão Open-WA iniciada!');
-    this.setupMessageListener();
+  }
+  async closeSession(): Promise<void> {
+    try {
+      if (this.client != undefined) {
+        const sessionAlreadyUp = this.client.getSessionId();
+        if (!sessionAlreadyUp) {
+          await this.client.kill();
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   private setupMessageListener() {

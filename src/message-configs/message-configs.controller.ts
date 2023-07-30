@@ -31,9 +31,9 @@ export class MessageConfigsController {
   @UseGuards(RolesGuard)
   @Roles('default')
   @Get()
-  findAll(@Req() request) {
+  findByUserId(@Req() request) {
     const userId = request.user.id;
-    return this.MessageConfigsService.findAll(userId);
+    return this.MessageConfigsService.findByUserId(userId);
   }
   @UseGuards(RolesGuard)
   @Roles('default')
