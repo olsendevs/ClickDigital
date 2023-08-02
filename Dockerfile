@@ -38,6 +38,6 @@ RUN apt-get update \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-EXPOSE 3000
+EXPOSE 3001
 
 CMD [ "node", "dist/main.js" ]
