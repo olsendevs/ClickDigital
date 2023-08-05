@@ -11,13 +11,10 @@ services:
     env_file:
       - .env
     restart: always
+
   mongo:
     image: mongo
     ports:
       - '27017:27017'
     volumes:
-      - 'mongo_data:/data/db'
-
-volumes:
-  mongo_data:
-    device: /var/mongodb_data
+      - '/var/mongodb_data:/data/db'
