@@ -11,7 +11,7 @@ import {
 
 @Injectable()
 export class OpenWAService {
-  private client: Client;
+  private client: Client | any;
   private _seasson: string;
   async startSession(sessionId: string): Promise<void> {
     try {
@@ -41,7 +41,7 @@ export class OpenWAService {
           logConsole: false,
           popup: true,
           qrTimeout: 5,
-        });
+        }).catch((e) => {});
 
         this._seasson = undefined;
 
