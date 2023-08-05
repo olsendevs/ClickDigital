@@ -40,7 +40,7 @@ export class OpenWAService {
           hostNotificationLang: NotificationLanguage.PTBR,
           logConsole: false,
           popup: true,
-          qrTimeout: 5,
+          qrTimeout: 60,
         }).catch((e) => {});
 
         this._seasson = undefined;
