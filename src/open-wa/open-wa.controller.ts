@@ -14,13 +14,12 @@ export class OpenWAController {
   @Get()
   async getQRCode(@Res() res: Response, @Req() req) {
     try {
-      await res.setHeader('Content-Type', 'image/png');
+      //await res.setHeader('Content-Type', 'image/png');
       ev.on('qr.**', async (image) => {
         try {
           setTimeout(async () => {
             await this.openWASession.closeSession();
-          }, 10000);
-
+          }, 1000);
           return await res.send(image);
         } catch (e) {}
       });

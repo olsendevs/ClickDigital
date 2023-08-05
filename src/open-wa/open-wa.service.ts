@@ -12,7 +12,7 @@ import {
 @Injectable()
 export class OpenWAService {
   private client: Client;
-
+  private _seasson: string;
   async startSession(sessionId: string): Promise<void> {
     try {
       if (this.client != undefined) {
@@ -22,20 +22,34 @@ export class OpenWAService {
           return;
         }
       }
-      this.client = await create({
-        sessionId: sessionId,
-        multiDevice: true,
-        authTimeout: 60,
-        blockCrashLogs: true,
-        disableSpins: true,
-        headless: true,
-        hostNotificationLang: NotificationLanguage.PTBR,
-        logConsole: false,
-        popup: true,
-        qrTimeout: 0,
-      });
-      console.log('Sessão Open-WA iniciada!');
-    } catch (e) {}
+      console.log(this._seasson);
+      if (this._seasson != undefined) {
+        ev.on('qr.**', async (image) => {
+          return;
+        });
+      } else {
+        this._seasson = sessionId;
+
+        this.client = await create({
+          sessionId: sessionId,
+          multiDevice: true,
+          authTimeout: 60,
+          blockCrashLogs: true,
+          disableSpins: true,
+          headless: true,
+          hostNotificationLang: NotificationLanguage.PTBR,
+          logConsole: false,
+          popup: true,
+          qrTimeout: 5,
+        });
+
+        this._seasson = undefined;
+
+        console.log('Sessão Open-WA iniciada!');
+      }
+    } catch (e) {
+      this._seasson = undefined;
+    }
   }
   async checkSession(): Promise<boolean> {
     try {
@@ -55,6 +69,7 @@ export class OpenWAService {
       if (this.client != undefined) {
         const sessionAlreadyUp = this.client.getSessionId();
         if (!sessionAlreadyUp) {
+          console.log('kill - ' + sessionAlreadyUp);
           await this.client.kill();
         }
       }
