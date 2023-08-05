@@ -38,6 +38,8 @@ RUN apt-get update \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
-EXPOSE 3001
+RUN apt-get update && apt-get install -y procps
+
+EXPOSE 3000
 
 CMD [ "node", "dist/main.js" ]
