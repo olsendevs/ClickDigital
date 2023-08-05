@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { ErrorFilter } from './utils/error.filter';
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -13,8 +13,6 @@ async function bootstrap() {
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   });
-
-  app.useGlobalFilters(new ErrorFilter());
 
   await app.listen(3000);
 }
