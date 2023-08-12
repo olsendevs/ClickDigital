@@ -42,6 +42,13 @@ export class CustomerController {
   }
   @UseGuards(RolesGuard)
   @Roles('default')
+  @Get('home')
+  getHomeData(@Req() request) {
+    const userId = request.user.id;
+    return this.customerService.getHomeData(userId);
+  }
+  @UseGuards(RolesGuard)
+  @Roles('default')
   @Get(':id')
   findOne(@Param('id') id: string, @Req() request) {
     const userId = request.user.id;

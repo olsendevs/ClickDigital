@@ -27,6 +27,27 @@ export class CustomerRepository {
     ]);
     return { customers, totalCount };
   }
+  async getHomeData(userId: string) {
+    const currentDate = new Date();
+
+    const [totalCustomers, totalActive, totalDisabled, customers] =
+      await Promise.all([
+        this.CustomerModel.countDocuments({ deleted: false }).exec(),
+        this.CustomerModel.countDocuments({
+          deleted: false,
+          validateDate: { $gte: currentDate },
+        }).exec(),
+        this.CustomerModel.countDocuments({
+          deleted: false,
+          validateDate: { $lt: currentDate },
+        }).exec(),
+        this.CustomerModel.find({ deleted: false, userId })
+          .populate('planId', ['name', 'value'])
+          .populate('serviceId', ['name', 'cost']),
+        ,
+      ]);
+    return { totalCustomers, totalActive, totalDisabled, customers };
+  }
   async findActive() {
     const endFilterDate = new Date();
     const afterDayDate = new Date();

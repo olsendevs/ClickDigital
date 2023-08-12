@@ -29,6 +29,9 @@ export class CustomerService {
   async findAll(userId: string, page: number, size: number) {
     return await this.repo.findAll(userId, page, size);
   }
+  async getHomeData(userId: string) {
+    return await this.repo.getHomeData(userId);
+  }
 
   async findOne(id: string, userId: string) {
     return await this.repo.findOne(id, userId);
