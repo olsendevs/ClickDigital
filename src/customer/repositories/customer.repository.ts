@@ -20,7 +20,9 @@ export class CustomerRepository {
     const [customers, totalCount] = await Promise.all([
       this.CustomerModel.find({ deleted: false, userId })
         .skip(skip)
-        .limit(size),
+        .limit(size)
+        .populate('planId', ['name', 'value'])
+        .populate('serviceId', 'name'),
       this.CustomerModel.countDocuments({ deleted: false }).exec(),
     ]);
     return { customers, totalCount };
