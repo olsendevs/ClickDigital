@@ -15,8 +15,12 @@ export class CustomerRepository {
     return result.id;
   }
 
-  async findAll(userId: string) {
+  async findAll(userId: string, page: number, size: number) {
+    console.log(page, size);
+    const skip = (page - 1) * size;
     return await this.CustomerModel.find({ deleted: false, userId })
+      .skip(skip)
+      .limit(size)
       .populate('planId', ['name', 'value'])
       .populate('serviceId', 'name');
   }

@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Req,
+  Query,
 } from '@nestjs/common';
 import { CustomerService } from './services/customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -28,9 +29,16 @@ export class CustomerController {
   @UseGuards(RolesGuard)
   @Roles('default')
   @Get()
-  findAll(@Req() request) {
+  findAll(
+    @Req() request,
+    @Query('page') page: number,
+    @Query('size') size: number,
+  ) {
+    page ? page : (page = 1);
+    size ? size : (size = 1);
+
     const userId = request.user.id;
-    return this.customerService.findAll(userId);
+    return this.customerService.findAll(userId, page, size);
   }
   @UseGuards(RolesGuard)
   @Roles('default')
