@@ -13,8 +13,14 @@ export class PlanRepository {
     return result.id;
   }
 
-  async findAll(userId: string) {
-    return await this.PlanModel.find({ deleted: false, userId });
+  async findAll(userId: string, page: number, size: number) {
+    const skip = (page - 1) * size;
+    const [plans, totalCount] = await Promise.all([
+      this.PlanModel.find({ deleted: false, userId }).skip(skip).limit(size),
+      this.PlanModel.countDocuments({ deleted: false }).exec(),
+    ]);
+
+    return { plans, totalCount };
   }
 
   async findOne(id: string, userId: string) {

@@ -35,7 +35,7 @@ export class CustomerController {
     @Query('size') size: number,
   ) {
     page ? page : (page = 1);
-    size ? size : (size = 1);
+    size ? size : (size = 5);
 
     const userId = request.user.id;
     return this.customerService.findAll(userId, page, size);

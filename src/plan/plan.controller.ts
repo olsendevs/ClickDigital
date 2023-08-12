@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Req,
+  Query,
 } from '@nestjs/common';
 import { PlanService } from './services/plan.service';
 import { CreatePlanDto } from './dto/create-plan.dto';
@@ -28,9 +29,16 @@ export class PlanController {
   @UseGuards(RolesGuard)
   @Roles('default')
   @Get()
-  findAll(@Req() request) {
+  findAll(
+    @Req() request,
+    @Query('page') page: number,
+    @Query('size') size: number,
+  ) {
+    page ? page : (page = 1);
+    size ? size : (size = 5);
+
     const userId = request.user.id;
-    return this.planService.findAll(userId);
+    return this.planService.findAll(userId, page, size);
   }
   @UseGuards(RolesGuard)
   @Roles('default')

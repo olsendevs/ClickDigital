@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Req,
+  Query,
 } from '@nestjs/common';
 import { ServiceService } from './services/service.service';
 import { CreateServiceDto } from './dto/create-service.dto';
@@ -28,9 +29,16 @@ export class ServiceController {
   @UseGuards(RolesGuard)
   @Roles('default')
   @Get()
-  findAll(@Req() request) {
+  findAll(
+    @Req() request,
+    @Query('page') page: number,
+    @Query('size') size: number,
+  ) {
+    page ? page : (page = 1);
+    size ? size : (size = 5);
+
     const userId = request.user.id;
-    return this.serviceService.findAll(userId);
+    return this.serviceService.findAll(userId, page, size);
   }
   @UseGuards(RolesGuard)
   @Roles('default')

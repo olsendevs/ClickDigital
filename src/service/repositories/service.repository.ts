@@ -16,8 +16,13 @@ export class ServiceRepository {
     return result.id;
   }
 
-  async findAll(userId: string) {
-    return await this.serviceModel.find({ deleted: false, userId });
+  async findAll(userId: string, page: number, size: number) {
+    const skip = (page - 1) * size;
+    const [services, totalCount] = await Promise.all([
+      this.serviceModel.find({ deleted: false, userId }).skip(skip).limit(size),
+      this.serviceModel.countDocuments({ deleted: false }).exec(),
+    ]);
+    return { services, totalCount };
   }
 
   async findOne(id: string, userId: string) {

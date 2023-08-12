@@ -18,8 +18,8 @@ export class PlanService {
     });
   }
 
-  async findAll(userId: string) {
-    return await this.repo.findAll(userId);
+  async findAll(userId: string, page: number, size: number) {
+    return await this.repo.findAll(userId, page, size);
   }
 
   async findOne(id: string, userId: string) {

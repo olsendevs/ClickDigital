@@ -16,13 +16,14 @@ export class CustomerRepository {
   }
 
   async findAll(userId: string, page: number, size: number) {
-    console.log(page, size);
     const skip = (page - 1) * size;
-    return await this.CustomerModel.find({ deleted: false, userId })
-      .skip(skip)
-      .limit(size)
-      .populate('planId', ['name', 'value'])
-      .populate('serviceId', 'name');
+    const [customers, totalCount] = await Promise.all([
+      this.CustomerModel.find({ deleted: false, userId })
+        .skip(skip)
+        .limit(size),
+      this.CustomerModel.countDocuments({ deleted: false }).exec(),
+    ]);
+    return { customers, totalCount };
   }
   async findActive() {
     const endFilterDate = new Date();
