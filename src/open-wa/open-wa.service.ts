@@ -100,7 +100,20 @@ export class OpenWAService {
     });
   }
 
-  async sendMessage(sessionId: ChatId, message: string) {
-    await this.client.sendText(sessionId, message);
+  async sendMessage(sessionId: string, chatId: ChatId, message: string) {
+    const client = this.client.find(
+      (x) => x != undefined && x._createConfig.sessionId == sessionId,
+    );
+    if (client) {
+      try {
+        await client.sendText(chatId, message);
+        console.log('mensagem enviada.');
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      throw new Error('Client not found');
+    }
+    return;
   }
 }

@@ -1,10 +1,19 @@
 // qr-code.controller.ts
 
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { OpenWAService } from './open-wa.service';
 import { Response } from 'express';
-import { ev } from '@open-wa/wa-automate';
+import { ChatId, ev } from '@open-wa/wa-automate';
 import { Roles, RolesGuard } from 'src/auth/jwt/role.guard';
+import { SendMessageDto } from './dto/send-message.dto';
 
 @Controller('qr-code')
 export class OpenWAController {
@@ -18,9 +27,6 @@ export class OpenWAController {
       //await res.setHeader('Content-Type', 'image/png');
       ev.on(`qr.${req.user.id}`, async (image) => {
         try {
-          setTimeout(async () => {
-            await this.openWASession.closeSession(req.user.id);
-          }, 1000);
           return await res.send(image);
         } catch (e) {}
       });
@@ -46,6 +52,27 @@ export class OpenWAController {
       const result = await this.openWASession.checkSession(req.user.id);
       return res.status(200).send(result);
     } catch (error) {
+      res.status(500).send('Erro ao obter o  sessão do usuário.');
+    }
+  }
+  @UseGuards(RolesGuard)
+  @Roles('default')
+  @Post('send-message')
+  async sendMessage(
+    @Body() sendMessage: SendMessageDto,
+    @Res() res: Response,
+    @Req() req,
+  ) {
+    try {
+      const chatId = (sendMessage.whatsapp + '@c.us') as ChatId;
+      await this.openWASession.sendMessage(
+        req.user.id,
+        chatId,
+        sendMessage.message,
+      );
+      return res.status(200).send();
+    } catch (error) {
+      console.error(error);
       res.status(500).send('Erro ao obter o  sessão do usuário.');
     }
   }

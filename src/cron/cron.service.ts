@@ -41,6 +41,7 @@ export class CronService implements OnModuleInit {
               schedule.scheduleJob(tomorow, async () => {
                 await this.openWAService.startSession(customer.userId);
                 await this.openWAService.sendMessage(
+                  customer.userId,
                   chatId,
                   messageConfigs.fiveDaysBefore,
                 );
@@ -67,6 +68,7 @@ export class CronService implements OnModuleInit {
               schedule.scheduleJob(tomorow, async () => {
                 await this.openWAService.startSession(customer.userId);
                 await this.openWAService.sendMessage(
+                  customer.userId,
                   chatId,
                   messageConfigs.threeDaysBefore,
                 );
@@ -93,6 +95,7 @@ export class CronService implements OnModuleInit {
               schedule.scheduleJob(tomorow, async () => {
                 await this.openWAService.startSession(customer.userId);
                 await this.openWAService.sendMessage(
+                  customer.userId,
                   chatId,
                   messageConfigs.oneDayBefore,
                 );
@@ -117,6 +120,7 @@ export class CronService implements OnModuleInit {
               schedule.scheduleJob(tomorow, async () => {
                 await this.openWAService.startSession(customer.userId);
                 await this.openWAService.sendMessage(
+                  customer.userId,
                   chatId,
                   messageConfigs.EndDay,
                 );
@@ -143,6 +147,7 @@ export class CronService implements OnModuleInit {
               schedule.scheduleJob(tomorow, async () => {
                 await this.openWAService.startSession(customer.userId);
                 await this.openWAService.sendMessage(
+                  customer.userId,
                   chatId,
                   messageConfigs.oneDayAfter,
                 );
