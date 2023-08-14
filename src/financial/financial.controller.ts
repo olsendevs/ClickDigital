@@ -11,8 +11,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { FinancialService } from './services/financial.service';
-import { CreateFinancialDto } from './dto/create-Financial.dto';
-import { UpdateFinancialDto } from './dto/update-Financial.dto';
+import { CreateFinancialDto } from './dto/create-financial.dto';
+import { UpdateFinancialDto } from './dto/update-financial.dto';
 import { Roles, RolesGuard } from 'src/auth/jwt/role.guard';
 
 @Controller('financial')

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UpdateFinancialDto } from '../dto/update-Financial.dto';
+import { UpdateFinancialDto } from '../dto/update-financial.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Financial } from '../entities/Financial.entity';
+import { Financial } from '../entities/financial.entity';
 import { Model } from 'mongoose';
 
 @Injectable()
