@@ -11,6 +11,8 @@ import { CronModule } from './cron/cron.module';
 import { MessageConfigsModule } from './message-configs/message-configs.module';
 import { MessageModule } from './message/message.module';
 import { HealthCheckController } from './health-check/health-check.controller';
+import { FinancialController } from './financial/financial.controller';
+import { FinancialModule } from './financial/financial.module';
 import 'dotenv/config';
 
 @Module({
@@ -26,6 +28,7 @@ import 'dotenv/config';
     CronModule,
     MessageConfigsModule,
     MessageModule,
+    FinancialModule,
   ],
   controllers: [HealthCheckController],
   providers: [],
