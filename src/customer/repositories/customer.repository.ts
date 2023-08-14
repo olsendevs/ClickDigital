@@ -30,23 +30,53 @@ export class CustomerRepository {
   async getHomeData(userId: string) {
     const currentDate = new Date();
 
-    const [totalCustomers, totalActive, totalDisabled, customers] =
-      await Promise.all([
-        this.CustomerModel.countDocuments({ deleted: false }).exec(),
-        this.CustomerModel.countDocuments({
-          deleted: false,
-          validateDate: { $gte: currentDate },
-        }).exec(),
-        this.CustomerModel.countDocuments({
-          deleted: false,
-          validateDate: { $lt: currentDate },
-        }).exec(),
-        this.CustomerModel.find({ deleted: false, userId })
-          .populate('planId', ['name', 'value'])
-          .populate('serviceId', ['name', 'cost']),
-        ,
-      ]);
-    return { totalCustomers, totalActive, totalDisabled, customers };
+    const fiveDaysBeforeDate = new Date();
+    fiveDaysBeforeDate.setDate(fiveDaysBeforeDate.getDate() - 5);
+
+    const fiveDaysAfterDate = new Date();
+    fiveDaysAfterDate.setDate(fiveDaysAfterDate.getDate() + 5);
+
+    const [
+      totalCustomers,
+      totalActive,
+      totalDisabled,
+      customers,
+      allCustomers,
+    ] = await Promise.all([
+      this.CustomerModel.countDocuments({
+        deleted: false,
+        userId,
+      }).exec(),
+      this.CustomerModel.countDocuments({
+        deleted: false,
+        validateDate: { $gte: currentDate },
+        userId,
+      }).exec(),
+      this.CustomerModel.countDocuments({
+        deleted: false,
+        validateDate: { $lt: currentDate },
+        userId,
+      }).exec(),
+      this.CustomerModel.find({
+        deleted: false,
+        userId,
+        validateDate: { $gte: fiveDaysBeforeDate, $lt: fiveDaysAfterDate },
+      }),
+      this.CustomerModel.find({
+        deleted: false,
+        userId,
+      })
+        .populate('planId', ['name', 'value'])
+        .populate('serviceId', ['name', 'cost']),
+    ]);
+    console.log(allCustomers);
+    return {
+      totalCustomers,
+      totalActive,
+      totalDisabled,
+      customers,
+      allCustomers,
+    };
   }
   async findActive() {
     const endFilterDate = new Date();

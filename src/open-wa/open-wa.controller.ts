@@ -14,11 +14,12 @@ export class OpenWAController {
   @Get()
   async getQRCode(@Res() res: Response, @Req() req) {
     try {
+      console.log('userid ', req.user.id);
       //await res.setHeader('Content-Type', 'image/png');
-      ev.on('qr.**', async (image) => {
+      ev.on(`qr.${req.user.id}`, async (image) => {
         try {
           setTimeout(async () => {
-            await this.openWASession.closeSession();
+            await this.openWASession.closeSession(req.user.id);
           }, 1000);
           return await res.send(image);
         } catch (e) {}
@@ -42,7 +43,7 @@ export class OpenWAController {
   @Get('check')
   async getSeasson(@Res() res: Response, @Req() req) {
     try {
-      const result = await this.openWASession.checkSession();
+      const result = await this.openWASession.checkSession(req.user.id);
       return res.status(200).send(result);
     } catch (error) {
       res.status(500).send('Erro ao obter o  sessão do usuário.');
