@@ -17,4 +17,5 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - '/var/mongodb_data:/data/db'
+      - './mongod.conf:/etc/mongod.conf'
+      - mongodb_data:/data/db
