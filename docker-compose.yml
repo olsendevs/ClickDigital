@@ -11,11 +11,14 @@ services:
     env_file:
       - .env
     restart: always
-
   mongo:
     image: mongo
     ports:
       - '27017:27017'
     volumes:
-      - './mongod.conf:/etc/mongod.conf'
       - mongodb_data:/data/db
+      - ./mongod.conf:/etc/mongod.conf:ro # Monta o arquivo mongod.conf como somente leitura
+
+volumes:
+  mongodb_data:
+    driver: local
