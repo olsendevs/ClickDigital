@@ -34,3 +34,51 @@ lerna-debug.log*
 **.node-persist**
 **_IGNORE_**
 # end managed
+
+# EvolutionAPI
+# compiled output
+/evolution-api/dist
+/evolution-api/node_modules
+
+/evolution-api/Docker/.env
+
+# Logs
+/evolution-apilogs/**.json
+/evolution-api*.log
+/evolution-apinpm-debug.log*
+/evolution-apipnpm-debug.log*
+/evolution-apiyarn-debug.log*
+/evolution-apiyarn-error.log*
+/evolution-apilerna-debug.log*
+
+/evolution-api/docker-compose-data
+/evolution-api/docker-data
+
+/evolution-apidocker-compose.yaml
+
+# Package
+/evolution-api/yarn.lock
+/evolution-api/package-lock.json
+
+# IDEs
+/evolution-api.vscode/*
+/evolution-api!.vscode/settings.json
+/evolution-api!.vscode/tasks.json
+/evolution-api!.vscode/launch.json
+/evolution-api!.vscode/extensions.json
+/evolution-api.nova/*
+
+# Prisma
+/evolution-api/prisma/migrations
+
+# Project related
+/evolution-api/instances/*
+/evolution-api!/instances/.gitkeep
+/evolution-api/test/
+/evolution-api/src/env.yml
+/evolution-api/store
+
+/evolution-api/temp/*
+
+/evolution-api.DS_Store
+/evolution-api/*.DS_Store
