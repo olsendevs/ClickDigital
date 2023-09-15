@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { PlanModule } from './plan/plan.module';
 import { CustomerModule } from './customer/customer.module';
 import { OpenWAModule } from './open-wa/open-wa.module';
+import { EvolutionAPIModule } from './evolution-api/evolution-api.module';
 import { CronModule } from './cron/cron.module';
 import { MessageConfigsModule } from './message-configs/message-configs.module';
 import { MessageModule } from './message/message.module';
@@ -24,7 +25,8 @@ import 'dotenv/config';
     AuthModule,
     PlanModule,
     CustomerModule,
-    OpenWAModule,
+    //OpenWAModule, // Desabilitado pois foi substituído pela EvolutionAPI.
+    EvolutionAPIModule,
     CronModule,
     MessageConfigsModule,
     MessageModule,
