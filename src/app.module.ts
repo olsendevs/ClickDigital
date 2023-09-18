@@ -19,7 +19,7 @@ import 'dotenv/config';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot('mongodb://root:airAPb8%23-nU7@mongo:27017/click-digital'),
+    MongooseModule.forRoot(process.env.MONGO_URI),
     ServiceModule,
     UserModule,
     AuthModule,
