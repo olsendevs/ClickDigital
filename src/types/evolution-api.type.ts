@@ -5,7 +5,7 @@ export interface IEvolutionInstanceList {
     profileName?: string;
     profilePictureUrl?: string;
     profileStatus?: string;
-    status: 'connecting' | 'open' | 'closed';
+    status: 'connecting' | 'open' | 'close';
     apikey: string;
   };
 }
