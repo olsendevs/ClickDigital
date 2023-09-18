@@ -15,15 +15,31 @@ export class CustomerRepository {
     return result.id;
   }
 
-  async findAll(userId: string, page: number, size: number) {
+  async findAll(
+    userId: string,
+    page: number,
+    size: number,
+    plan: string,
+    service: string,
+    status: string,
+    billing: string
+  ) {
+    let query = { deleted: false, userId };
+
+    if (plan !== 'all') Object.assign(query, { planId: plan });
+    if (service !== 'all') Object.assign(query, { serviceId: service });
+    if (status === 'ended') Object.assign(query, { validateDate: { $lt: new Date() } });
+    if (status === 'working') Object.assign(query, { validateDate: { $gte: new Date() } });
+    if (billing !== 'all') Object.assign(query, { invoice: billing });
+
     const skip = (page - 1) * size;
     const [customers, totalCount] = await Promise.all([
-      this.CustomerModel.find({ deleted: false, userId })
+      this.CustomerModel.find(query)
         .skip(skip)
         .limit(size)
         .populate('planId', ['name', 'value'])
         .populate('serviceId', 'name'),
-      this.CustomerModel.countDocuments({ deleted: false }).exec(),
+      this.CustomerModel.countDocuments(query).exec(),
     ]);
     return { customers, totalCount };
   }
@@ -112,6 +128,10 @@ export class CustomerRepository {
         whatsapp: updateCustomerDto.whatsapp,
         login: updateCustomerDto.login,
         password: updateCustomerDto.password,
+        device: updateCustomerDto.device,
+        mac: updateCustomerDto.mac,
+        key: updateCustomerDto.key,
+        apps: updateCustomerDto.apps,
         serviceId: updateCustomerDto.serviceId,
         planId: updateCustomerDto.planId,
         invoice: updateCustomerDto.invoice,

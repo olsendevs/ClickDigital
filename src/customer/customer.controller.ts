@@ -33,12 +33,16 @@ export class CustomerController {
     @Req() request,
     @Query('page') page: number,
     @Query('size') size: number,
+    @Query('plan') plan: string,
+    @Query('service') service: string,
+    @Query('status') status: string,
+    @Query('billing') billing: string,
   ) {
     page ? page : (page = 1);
     size ? size : (size = 5);
 
     const userId = request.user.id;
-    return this.customerService.findAll(userId, page, size);
+    return this.customerService.findAll(userId, page, size, plan, service, status, billing);
   }
   @UseGuards(RolesGuard)
   @Roles('default')

@@ -6,6 +6,10 @@ export interface Customer {
   whatsapp: string;
   login: string;
   password: string;
+  device: string;
+  mac: string;
+  key: string;
+  apps: string;
   serviceId: mongoose.Types.ObjectId | string | any;
   planId: mongoose.Types.ObjectId | string | any;
   invoice: string;
@@ -44,6 +48,10 @@ export const CustomerSchema = new mongoose.Schema({
   whatsapp: { type: String, required: true },
   login: { type: String, required: true },
   password: { type: String, required: true },
+  device: { type: String, required: true },
+  mac: { type: String, required: true },
+  key: { type: String, required: true },
+  apps: { type: String, required: true },
   serviceId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Service',

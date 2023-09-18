@@ -13,6 +13,10 @@ export class CustomerService {
       whatsapp: createCustomerDto.whatsapp,
       login: createCustomerDto.login,
       password: createCustomerDto.password,
+      device: createCustomerDto.device,
+      mac: createCustomerDto.mac,
+      key: createCustomerDto.key,
+      apps: createCustomerDto.apps,
       serviceId: createCustomerDto.serviceId,
       planId: createCustomerDto.planId,
       invoice: createCustomerDto.invoice,
@@ -26,8 +30,16 @@ export class CustomerService {
     });
   }
 
-  async findAll(userId: string, page: number, size: number) {
-    return await this.repo.findAll(userId, page, size);
+  async findAll(
+    userId: string,
+    page: number,
+    size: number,
+    plan: string,
+    service: string,
+    status: string,
+    billing: string
+  ) {
+    return await this.repo.findAll(userId, page, size, plan, service, status, billing);
   }
   async getHomeData(userId: string) {
     return await this.repo.getHomeData(userId);

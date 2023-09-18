@@ -21,6 +21,22 @@ export class UpdateCustomerDto extends PartialType(CreateCustomerDto) {
 
   @IsString()
   @IsNotEmpty()
+  device: string;
+
+  @IsString()
+  @IsNotEmpty()
+  mac: string;
+
+  @IsString()
+  @IsNotEmpty()
+  key: string;
+
+  @IsString()
+  @IsNotEmpty()
+  apps: string;
+
+  @IsString()
+  @IsNotEmpty()
   serviceId: string;
 
   @IsString()
