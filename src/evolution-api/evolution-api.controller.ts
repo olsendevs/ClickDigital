@@ -8,6 +8,7 @@ import type {
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Post,
   Req,
@@ -34,17 +35,37 @@ export class EvolutionAPIController {
       const instances = await this.api<null, IEvolutionInstanceList[]>(
         '/instance/fetchInstances',
       );
-      const exists = instances.some(
+      const exists = instances.find(
         (i) => i.instance.instanceName === (req.user?.id || req.headers?.id),
       );
 
-      if (exists) {
-        res.status(200).send('Usuário já está conectado.');
+      if (exists && exists.instance.status === 'open') {
+        res.status(200).send('Already conected.');
+      } else if (exists && (
+        exists.instance.status === 'connecting' ||
+        exists.instance.status === 'close'
+      )) {
+        await this.api<null, null>(
+          `/instance/delete/${req.user?.id || req.headers?.id}`,
+          null,
+          'DELETE',
+        );
+
+        const response = await this.api<unknown, IEvolutionInstanceCreate>(
+          '/instance/create',
+          {
+            instanceName: (req.user?.id || req.headers?.id),
+            qrcode: true,
+          },
+          'POST',
+        );
+
+        res.status(200).send(response.qrcode.base64);
       } else {
         const response = await this.api<unknown, IEvolutionInstanceCreate>(
           '/instance/create',
           {
-            instanceName: 'teste',
+            instanceName: (req.user?.id || req.headers?.id),
             qrcode: true,
           },
           'POST',
@@ -60,6 +81,34 @@ export class EvolutionAPIController {
 
   @UseGuards(RolesGuard)
   @Roles('default')
+  @Delete()
+  public async deleteSession(@Res() res: Response, @Req() req) {
+    if (!req.user?.id && !req.headers?.id) {
+      return res.status(401).send('Não autorizado.');
+    }
+
+    try {
+      await this.api<null, null>(
+        `/instance/logout/${req.user?.id || req.headers?.id}`,
+        null,
+        'DELETE',
+      );
+
+      await this.api<null, null>(
+        `/instance/delete/${req.user?.id || req.headers?.id}`,
+        null,
+        'DELETE',
+      );
+
+      return res.status(200).end();
+    } catch (e) {
+      console.error(e);
+      res.status(500).send('Erro ao obter a sessão do usuário.');
+    }
+  }
+
+  @UseGuards(RolesGuard)
+  @Roles('default')
   @Get('check')
   public async getSession(@Res() res: Response, @Req() req) {
     if (!req.user?.id && !req.headers?.id) {
@@ -70,11 +119,11 @@ export class EvolutionAPIController {
       const instances = await this.api<null, IEvolutionInstanceList[]>(
         '/instance/fetchInstances',
       );
-      const exists = instances.some(
+      const exists = instances.find(
         (i) => i.instance.instanceName === (req.user?.id || req.headers?.id),
       );
 
-      return res.status(200).send(exists);
+      return res.status(200).send(exists && exists.instance.status === 'open');
     } catch (e) {
       console.error(e);
       res.status(500).send('Erro ao obter a sessão do usuário.');
@@ -97,11 +146,11 @@ export class EvolutionAPIController {
       const instances = await this.api<null, IEvolutionInstanceList[]>(
         '/instance/fetchInstances',
       );
-      const exists = instances.some(
+      const exists = instances.find(
         (i) => i.instance.instanceName === (req.user?.id || req.headers?.id),
       );
 
-      if (exists) {
+      if (exists && exists.instance.status === 'open') {
         await this.api<unknown, IEvolutionMessageSend>(
           `/message/sendText/${req.user?.id || req.headers?.id}`,
           {
