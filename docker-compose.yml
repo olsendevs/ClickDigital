@@ -4,25 +4,29 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: clickdigital
     ports:
       - '3000:3000'
       - '4000:4000'
     depends_on:
-      - 'mongo'
+      - 'mongodb'
     env_file:
       - .env
-    restart: always
-  mongo:
-    image: mongo:latest
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: .airAPb8#-nU7
+      WAIT_HOSTS: mongodb:27017
+    restart: always
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: ".airAPb8#-nU7"
+      MONGO_INITDB_DATABASE: "click-digital"
     ports:
       - '27017:27017'
     volumes:
       - mongodb_data:/data/db
       - ./mongod.conf:/etc/mongod.conf:ro # Monta o arquivo mongod.conf como somente leitura
     restart: always
-
 volumes:
   mongodb_data:
