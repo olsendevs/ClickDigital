@@ -41,10 +41,11 @@ export class EvolutionAPIController {
 
       if (exists && exists.instance.status === 'open') {
         res.status(200).send('Already conected.');
-      } else if (exists && (
-        exists.instance.status === 'connecting' ||
-        exists.instance.status === 'close'
-      )) {
+      } else if (
+        exists &&
+        (exists.instance.status === 'connecting' ||
+          exists.instance.status === 'close')
+      ) {
         await this.api<null, null>(
           `/instance/delete/${req.user?.id || req.headers?.id}`,
           null,
@@ -54,7 +55,7 @@ export class EvolutionAPIController {
         const response = await this.api<unknown, IEvolutionInstanceCreate>(
           '/instance/create',
           {
-            instanceName: (req.user?.id || req.headers?.id),
+            instanceName: req.user?.id || req.headers?.id,
             qrcode: true,
           },
           'POST',
@@ -65,7 +66,7 @@ export class EvolutionAPIController {
         const response = await this.api<unknown, IEvolutionInstanceCreate>(
           '/instance/create',
           {
-            instanceName: (req.user?.id || req.headers?.id),
+            instanceName: req.user?.id || req.headers?.id,
             qrcode: true,
           },
           'POST',
@@ -181,7 +182,7 @@ export class EvolutionAPIController {
     body?: T,
     method: string = 'GET',
   ): Promise<U> {
-    const response = await fetch(`http://127.0.0.1:4000${endpoint}`, {
+    const response = await fetch(`http://127.0.0.1:8080${endpoint}`, {
       method,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
