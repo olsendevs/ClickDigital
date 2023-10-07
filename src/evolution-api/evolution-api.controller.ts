@@ -36,6 +36,7 @@ export class EvolutionAPIController {
       const instances = await this.api<null, IEvolutionInstanceList[]>(
         '/instance/fetchInstances',
       );
+      console.log(instances);
       const exists = instances.find(
         (i) => i.instance.instanceName === (req.user?.id || req.headers?.id),
       );
@@ -148,6 +149,7 @@ export class EvolutionAPIController {
       const instances = await this.api<null, IEvolutionInstanceList[]>(
         '/instance/fetchInstances',
       );
+      console.log(instances);
       const exists = instances.find(
         (i) => i.instance.instanceName === (req.user?.id || req.headers?.id),
       );
