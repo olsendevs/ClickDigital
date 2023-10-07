@@ -18,6 +18,7 @@ import {
 import { Response } from 'express';
 import { Roles, RolesGuard } from 'src/auth/jwt/role.guard';
 import { SendMessageDto } from './dto/send-message.dto';
+import 'dotenv/config';
 
 @Controller('qr-code')
 export class EvolutionAPIController {
@@ -182,7 +183,7 @@ export class EvolutionAPIController {
     body?: T,
     method: string = 'GET',
   ): Promise<U> {
-    const response = await fetch(`http://127.0.0.1:8080${endpoint}`, {
+    const response = await fetch(`http://89.117.56.45:8080${endpoint}`, {
       method,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
