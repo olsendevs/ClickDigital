@@ -20,7 +20,8 @@ import 'dotenv/config';
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot('mongodb://0.0.0.0:27017/', {
-     dbName: 'click-digital',}),
+      dbName: 'click-digital',
+    }),
     ServiceModule,
     UserModule,
     AuthModule,

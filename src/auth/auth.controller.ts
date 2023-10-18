@@ -21,7 +21,7 @@ export class AuthController {
     const user = await this.userService.create(dto);
     const payload: Payload = {
       sub: user._id,
-      role: 'default',
+      role: user.type,
     };
 
     const token = await this.authService.signPayload(payload);
@@ -32,10 +32,9 @@ export class AuthController {
     const user = await this.userService.authUser(UserDTO);
     const payload: Payload = {
       sub: user._id,
-      role: 'default',
+      role: user.type,
     };
     const token = await this.authService.signPayload(payload);
-    //this.openWaService.startSession(user._id.toString());
     return { user, token };
   }
 }

@@ -16,6 +16,7 @@ export class UserService {
       email: createUserDto.email,
       password: createUserDto.password,
       whatsapp: createUserDto.whatsapp,
+      type: createUserDto.type,
       createAt: new Date(),
       updateAt: new Date(),
       deleted: false,

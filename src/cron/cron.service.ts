@@ -5,24 +5,25 @@ import { ChatId } from '@open-wa/wa-automate';
 import * as cron from 'node-cron';
 import * as schedule from 'node-schedule';
 import { CustomerRepository } from 'src/customer/repositories/customer.repository';
+import { EvolutionApiService } from 'src/evolution-api/evolution-service.service';
 import { MessageConfigsRepository } from 'src/message-configs/repositories/message-configs.repository';
-import { OpenWAService } from 'src/open-wa/open-wa.service';
 
 @Injectable()
 export class CronService implements OnModuleInit {
   constructor(
     private customerRepository: CustomerRepository,
     private messageConfigsRepository: MessageConfigsRepository,
-    private openWAService: OpenWAService,
+    private evolutionService: EvolutionApiService,
   ) {}
   onModuleInit() {
-    cron.schedule('0 0 * * *', async () => {
+    cron.schedule('* * * * *', async () => {
       try {
+        console.log('start');
         const customers = await this.customerRepository.findActive();
         customers.forEach(async (customer) => {
           const messageConfigs =
             await this.messageConfigsRepository.findByUserId(customer.userId);
-          const chatId = (customer.whatsapp + '@c.us') as ChatId;
+          const chatId = customer.whatsapp;
 
           let validateDate = new Date(customer.validateDate);
           let tomorow = new Date();
@@ -39,8 +40,7 @@ export class CronService implements OnModuleInit {
               customer.sendNotificationOn.fiveDaysBefore.sended == false
             ) {
               schedule.scheduleJob(tomorow, async () => {
-                await this.openWAService.startSession(customer.userId);
-                await this.openWAService.sendMessage(
+                await this.evolutionService.sendMessage(
                   customer.userId,
                   chatId,
                   messageConfigs.fiveDaysBefore,
@@ -66,8 +66,7 @@ export class CronService implements OnModuleInit {
               customer.sendNotificationOn.threeDaysBefore.sended == false
             ) {
               schedule.scheduleJob(tomorow, async () => {
-                await this.openWAService.startSession(customer.userId);
-                await this.openWAService.sendMessage(
+                await this.evolutionService.sendMessage(
                   customer.userId,
                   chatId,
                   messageConfigs.threeDaysBefore,
@@ -93,8 +92,7 @@ export class CronService implements OnModuleInit {
               customer.sendNotificationOn.oneDayBefore.sended == false
             ) {
               schedule.scheduleJob(tomorow, async () => {
-                await this.openWAService.startSession(customer.userId);
-                await this.openWAService.sendMessage(
+                await this.evolutionService.sendMessage(
                   customer.userId,
                   chatId,
                   messageConfigs.oneDayBefore,
@@ -118,8 +116,7 @@ export class CronService implements OnModuleInit {
               customer.sendNotificationOn.EndDay.sended == false
             ) {
               schedule.scheduleJob(tomorow, async () => {
-                await this.openWAService.startSession(customer.userId);
-                await this.openWAService.sendMessage(
+                await this.evolutionService.sendMessage(
                   customer.userId,
                   chatId,
                   messageConfigs.EndDay,
@@ -145,8 +142,7 @@ export class CronService implements OnModuleInit {
               customer.sendNotificationOn.oneDayAfter.sended == false
             ) {
               schedule.scheduleJob(tomorow, async () => {
-                await this.openWAService.startSession(customer.userId);
-                await this.openWAService.sendMessage(
+                await this.evolutionService.sendMessage(
                   customer.userId,
                   chatId,
                   messageConfigs.oneDayAfter,

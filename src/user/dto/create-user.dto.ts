@@ -13,6 +13,10 @@ export class CreateUserDto {
   @IsNotEmpty()
   whatsapp: string;
 
+  @IsString()
+  @IsNotEmpty()
+  type: 'admin' | 'default';
+
   @IsEmail()
   @IsNotEmpty()
   email: string;

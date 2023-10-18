@@ -36,18 +36,33 @@ export class UserRepository {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const hashed = await bcrypt.hash(updateUserDto.password, 10);
+    if (updateUserDto.password) {
+      const hashed = await bcrypt.hash(updateUserDto.password, 10);
+
+      await this.userModel.updateOne(
+        { _id: id },
+        {
+          name: updateUserDto.name,
+          company: updateUserDto.company,
+          email: updateUserDto.email,
+          password: hashed,
+          whatsapp: updateUserDto.whatsapp,
+          updateAt: new Date(),
+        },
+      );
+    }
     await this.userModel.updateOne(
       { _id: id },
       {
         name: updateUserDto.name,
         company: updateUserDto.company,
         email: updateUserDto.email,
-        password: hashed,
         whatsapp: updateUserDto.whatsapp,
+        type: updateUserDto.type,
         updateAt: new Date(),
       },
     );
+
     return await this.findOne(id);
   }
 

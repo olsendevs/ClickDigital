@@ -8,6 +8,8 @@ import { CustomerSchema } from 'src/customer/entities/customer.entity';
 import { MessageConfigsRepository } from 'src/message-configs/repositories/message-configs.repository';
 import { MessageConfigSchema } from 'src/message-configs/entities/message-config.entity';
 import { OpenWAService } from 'src/open-wa/open-wa.service';
+import { EvolutionAPIModule } from 'src/evolution-api/evolution-api.module';
+import { EvolutionApiService } from 'src/evolution-api/evolution-service.service';
 
 @Module({
   imports: [
@@ -29,7 +31,7 @@ import { OpenWAService } from 'src/open-wa/open-wa.service';
     CronService,
     CustomerRepository,
     MessageConfigsRepository,
-    OpenWAService,
+    EvolutionApiService,
   ],
 })
 export class CronModule {}

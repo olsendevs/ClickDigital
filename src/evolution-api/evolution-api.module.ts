@@ -2,10 +2,11 @@
 
 import { Module } from '@nestjs/common';
 import { EvolutionAPIController } from './evolution-api.controller';
+import { EvolutionApiService } from './evolution-service.service';
 
 @Module({
   controllers: [EvolutionAPIController],
-  providers: [],
-  exports: [],
+  providers: [EvolutionApiService],
+  exports: [EvolutionApiService],
 })
 export class EvolutionAPIModule {}

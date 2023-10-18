@@ -32,6 +32,8 @@ export class RolesGuard implements CanActivate {
         secret: process.env.SECRET_KEY,
       });
       const userRoles = payload.role;
+
+      console.log(userRoles);
       request.user = { id: payload.sub };
       return roles.includes(userRoles);
     } catch (err) {
