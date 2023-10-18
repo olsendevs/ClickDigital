@@ -22,14 +22,16 @@ export class CustomerRepository {
     plan: string,
     service: string,
     status: string,
-    billing: string
+    billing: string,
   ) {
     let query = { deleted: false, userId };
 
     if (plan !== 'all') Object.assign(query, { planId: plan });
     if (service !== 'all') Object.assign(query, { serviceId: service });
-    if (status === 'ended') Object.assign(query, { validateDate: { $lt: new Date() } });
-    if (status === 'working') Object.assign(query, { validateDate: { $gte: new Date() } });
+    if (status === 'ended')
+      Object.assign(query, { validateDate: { $lt: new Date() } });
+    if (status === 'working')
+      Object.assign(query, { validateDate: { $gte: new Date() } });
     if (billing !== 'all') Object.assign(query, { invoice: billing });
 
     const skip = (page - 1) * size;

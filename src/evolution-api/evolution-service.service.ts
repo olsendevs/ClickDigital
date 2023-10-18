@@ -42,7 +42,6 @@ export class EvolutionApiService {
       const instances = await this.api<null, IEvolutionInstanceList[]>(
         '/instance/fetchInstances',
       );
-      console.log(instances);
       const exists = instances.find(
         (i) => i.instance.instanceName === sessionId,
       );

@@ -18,8 +18,9 @@ export class CronService implements OnModuleInit {
   onModuleInit() {
     cron.schedule('* * * * *', async () => {
       try {
-        console.log('start');
         const customers = await this.customerRepository.findActive();
+
+        console.log(customers);
         customers.forEach(async (customer) => {
           const messageConfigs =
             await this.messageConfigsRepository.findByUserId(customer.userId);
@@ -32,9 +33,10 @@ export class CronService implements OnModuleInit {
           tomorow = new Date(tomorow.setMinutes(0));
 
           const fiveDaysBefore = new Date(
-            validateDate.setDate(validateDate.getDate() - 5),
+            validateDate.setDate(validateDate.getDate() - 4),
           );
-          if (fiveDaysBefore.getDay() == tomorow.getDay()) {
+
+          if (fiveDaysBefore.getDate() == tomorow.getDate()) {
             if (
               messageConfigs.fiveDaysBefore != '' &&
               customer.sendNotificationOn.fiveDaysBefore.sended == false
@@ -58,9 +60,9 @@ export class CronService implements OnModuleInit {
 
           validateDate = new Date(customer.validateDate);
           const threeDaysBefore = new Date(
-            validateDate.setDate(validateDate.getDate() - 3),
+            validateDate.setDate(validateDate.getDate() - 2),
           );
-          if (threeDaysBefore.getDay() == tomorow.getDay()) {
+          if (threeDaysBefore.getDate() == tomorow.getDate()) {
             if (
               messageConfigs.threeDaysBefore != '' &&
               customer.sendNotificationOn.threeDaysBefore.sended == false
@@ -84,9 +86,10 @@ export class CronService implements OnModuleInit {
 
           validateDate = new Date(customer.validateDate);
           const oneDayBefore = new Date(
-            validateDate.setDate(validateDate.getDate() - 1),
+            validateDate.setDate(validateDate.getDate()),
           );
-          if (oneDayBefore.getDay() == tomorow.getDay()) {
+
+          if (oneDayBefore.getDate() == tomorow.getDate()) {
             if (
               messageConfigs.oneDayBefore != '' &&
               customer.sendNotificationOn.oneDayBefore.sended == false
@@ -109,8 +112,10 @@ export class CronService implements OnModuleInit {
           }
 
           validateDate = new Date(customer.validateDate);
-          const EndDay = new Date(validateDate.setDate(validateDate.getDate()));
-          if (EndDay.getDay() == tomorow.getDay()) {
+          const EndDay = new Date(
+            validateDate.setDate(validateDate.getDate() + 1),
+          );
+          if (EndDay.getDate() == tomorow.getDate()) {
             if (
               messageConfigs.EndDay != '' &&
               customer.sendNotificationOn.EndDay.sended == false
@@ -134,20 +139,22 @@ export class CronService implements OnModuleInit {
 
           validateDate = new Date(customer.validateDate);
           const oneDayAfter = new Date(
-            validateDate.setDate(validateDate.getDate() + 1),
+            validateDate.setDate(validateDate.getDate() + 2),
           );
-          if (oneDayAfter.getDay() == tomorow.getDay()) {
+
+          if (oneDayAfter.getDate() == tomorow.getDate()) {
             if (
               messageConfigs.oneDayAfter != '' &&
               customer.sendNotificationOn.oneDayAfter.sended == false
             ) {
-              schedule.scheduleJob(tomorow, async () => {
-                await this.evolutionService.sendMessage(
-                  customer.userId,
-                  chatId,
-                  messageConfigs.oneDayAfter,
-                );
-              });
+              console.log(customer.userId, chatId, messageConfigs.oneDayAfter);
+              schedule.scheduleJob(tomorow, async () => {});
+              await this.evolutionService.sendMessage(
+                customer.userId,
+                chatId,
+                messageConfigs.oneDayAfter,
+              );
+
               customer.sendNotificationOn.oneDayAfter.sended = true;
               this.customerRepository.update(
                 customer._id.toString(),
