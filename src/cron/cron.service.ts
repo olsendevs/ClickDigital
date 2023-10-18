@@ -33,7 +33,7 @@ export class CronService implements OnModuleInit {
           tomorow = new Date(tomorow.setMinutes(0));
 
           const fiveDaysBefore = new Date(
-            validateDate.setDate(validateDate.getDate() - 4),
+            validateDate.setDate(validateDate.getDate() - 5),
           );
 
           if (fiveDaysBefore.getDate() == tomorow.getDate()) {
@@ -60,7 +60,7 @@ export class CronService implements OnModuleInit {
 
           validateDate = new Date(customer.validateDate);
           const threeDaysBefore = new Date(
-            validateDate.setDate(validateDate.getDate() - 2),
+            validateDate.setDate(validateDate.getDate() - 3),
           );
           if (threeDaysBefore.getDate() == tomorow.getDate()) {
             if (
@@ -86,7 +86,7 @@ export class CronService implements OnModuleInit {
 
           validateDate = new Date(customer.validateDate);
           const oneDayBefore = new Date(
-            validateDate.setDate(validateDate.getDate()),
+            validateDate.setDate(validateDate.getDate() - 1),
           );
 
           if (oneDayBefore.getDate() == tomorow.getDate()) {
@@ -112,9 +112,7 @@ export class CronService implements OnModuleInit {
           }
 
           validateDate = new Date(customer.validateDate);
-          const EndDay = new Date(
-            validateDate.setDate(validateDate.getDate() + 1),
-          );
+          const EndDay = new Date(validateDate.setDate(validateDate.getDate()));
           if (EndDay.getDate() == tomorow.getDate()) {
             if (
               messageConfigs.EndDay != '' &&
@@ -139,7 +137,7 @@ export class CronService implements OnModuleInit {
 
           validateDate = new Date(customer.validateDate);
           const oneDayAfter = new Date(
-            validateDate.setDate(validateDate.getDate() + 2),
+            validateDate.setDate(validateDate.getDate() + 1),
           );
 
           if (oneDayAfter.getDate() == tomorow.getDate()) {
