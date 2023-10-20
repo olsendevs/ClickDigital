@@ -25,7 +25,7 @@ export class EvolutionAPIController {
   public constructor() {}
 
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get()
   public async getQRCode(@Res() res: Response, @Req() req) {
     if (!req.user?.id && !req.headers?.id) {
@@ -83,7 +83,7 @@ export class EvolutionAPIController {
   }
 
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Delete()
   public async deleteSession(@Res() res: Response, @Req() req) {
     if (!req.user?.id && !req.headers?.id) {
@@ -111,7 +111,7 @@ export class EvolutionAPIController {
   }
 
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get('check')
   public async getSession(@Res() res: Response, @Req() req) {
     if (!req.user?.id && !req.headers?.id) {
@@ -134,7 +134,7 @@ export class EvolutionAPIController {
   }
 
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Post('send-message')
   public async sendMessage(
     @Body() message: SendMessageDto,

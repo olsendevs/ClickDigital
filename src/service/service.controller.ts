@@ -20,14 +20,14 @@ export class ServiceController {
   constructor(private readonly serviceService: ServiceService) {}
 
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Post()
   create(@Body() createServiceDto: CreateServiceDto, @Req() request) {
     const userId = request.user.id;
     return this.serviceService.create(createServiceDto, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get()
   findAll(
     @Req() request,
@@ -41,14 +41,14 @@ export class ServiceController {
     return this.serviceService.findAll(userId, page, size);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get(':id')
   findOne(@Param('id') id: string, @Req() request) {
     const userId = request.user.id;
     return this.serviceService.findOne(id, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -59,7 +59,7 @@ export class ServiceController {
     return this.serviceService.update(id, updateServiceDto, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.serviceService.delete(id);

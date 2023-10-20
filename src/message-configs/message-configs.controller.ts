@@ -19,7 +19,7 @@ export class MessageConfigsController {
   constructor(private readonly MessageConfigsService: MessageConfigsService) {}
 
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Post()
   create(
     @Body() createMessageConfigsDto: CreateMessageConfigDto,
@@ -29,21 +29,21 @@ export class MessageConfigsController {
     return this.MessageConfigsService.create(createMessageConfigsDto, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get()
   findByUserId(@Req() request) {
     const userId = request.user.id;
     return this.MessageConfigsService.findByUserId(userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get(':id')
   findOne(@Param('id') id: string, @Req() request) {
     const userId = request.user.id;
     return this.MessageConfigsService.findOne(id, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -58,7 +58,7 @@ export class MessageConfigsController {
     );
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.MessageConfigsService.delete(id);

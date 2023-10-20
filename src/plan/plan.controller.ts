@@ -20,14 +20,14 @@ export class PlanController {
   constructor(private readonly planService: PlanService) {}
 
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Post()
   create(@Body() createPlanDto: CreatePlanDto, @Req() request) {
     const userId = request.user.id;
     return this.planService.create(createPlanDto, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get()
   findAll(
     @Req() request,
@@ -41,14 +41,14 @@ export class PlanController {
     return this.planService.findAll(userId, page, size);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get(':id')
   findOne(@Param('id') id: string, @Req() request) {
     const userId = request.user.id;
     return this.planService.findOne(id, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -59,7 +59,7 @@ export class PlanController {
     return this.planService.update(id, updatePlanDto, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.planService.delete(id);

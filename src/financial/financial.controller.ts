@@ -20,14 +20,14 @@ export class FinancialController {
   constructor(private readonly FinancialService: FinancialService) {}
 
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Post()
   create(@Body() createFinancialDto: CreateFinancialDto, @Req() request) {
     const userId = request.user.id;
     return this.FinancialService.create(createFinancialDto, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get()
   findAll(
     @Req() request,
@@ -41,14 +41,14 @@ export class FinancialController {
     return this.FinancialService.findAll(userId, page, size);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get(':id')
   findOne(@Param('id') id: string, @Req() request) {
     const userId = request.user.id;
     return this.FinancialService.findOne(id, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -59,7 +59,7 @@ export class FinancialController {
     return this.FinancialService.update(id, updateFinancialDto, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.FinancialService.delete(id);

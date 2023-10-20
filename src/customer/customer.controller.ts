@@ -20,14 +20,14 @@ export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Post()
   create(@Body() createCustomerDto: CreateCustomerDto, @Req() request) {
     const userId = request.user.id;
     return this.customerService.create(createCustomerDto, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get()
   findAll(
     @Req() request,
@@ -42,24 +42,32 @@ export class CustomerController {
     size ? size : (size = 5);
 
     const userId = request.user.id;
-    return this.customerService.findAll(userId, page, size, plan, service, status, billing);
+    return this.customerService.findAll(
+      userId,
+      page,
+      size,
+      plan,
+      service,
+      status,
+      billing,
+    );
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get('home')
   getHomeData(@Req() request) {
     const userId = request.user.id;
     return this.customerService.getHomeData(userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get(':id')
   findOne(@Param('id') id: string, @Req() request) {
     const userId = request.user.id;
     return this.customerService.findOne(id, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -70,7 +78,7 @@ export class CustomerController {
     return this.customerService.update(id, updateCustomerDto, userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.customerService.delete(id);

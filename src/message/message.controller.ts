@@ -17,14 +17,14 @@ export class MessageController {
   constructor(private readonly MessageService: MessageService) {}
 
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get()
   findAll(@Req() request) {
     const userId = request.user.id;
     return this.MessageService.findAll(userId);
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get(':id')
   findOne(@Param('id') id: string, @Req() request) {
     const userId = request.user.id;

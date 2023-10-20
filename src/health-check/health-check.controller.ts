@@ -8,7 +8,7 @@ export class HealthCheckController {
     return `The application is running - ${new Date().toISOString()}`;
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get('auth')
   checkAuth() {
     return `The application is running - ${new Date().toISOString()}`;

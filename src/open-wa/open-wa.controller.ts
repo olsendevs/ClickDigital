@@ -19,7 +19,7 @@ import { SendMessageDto } from './dto/send-message.dto';
 export class OpenWAController {
   constructor(private readonly openWASession: OpenWAService) {}
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get()
   async getQRCode(@Res() res: Response, @Req() req) {
     try {
@@ -45,7 +45,7 @@ export class OpenWAController {
     }
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Get('check')
   async getSeasson(@Res() res: Response, @Req() req) {
     try {
@@ -56,7 +56,7 @@ export class OpenWAController {
     }
   }
   @UseGuards(RolesGuard)
-  @Roles('default')
+  @Roles('default', 'admin')
   @Post('send-message')
   async sendMessage(
     @Body() sendMessage: SendMessageDto,
