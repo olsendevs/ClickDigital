@@ -15,7 +15,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  type: 'admin' | 'default', 'admin';
+  type: 'admin' | 'default';
 
   @IsEmail()
   @IsNotEmpty()
